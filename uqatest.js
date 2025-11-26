@@ -1,149 +1,7 @@
-// --- 1. SETUP GLOBALS ---
 const { useState } = React;
-const { createRoot } = ReactDOM;
-
-// --- 2. DEFINE ICONS MANUALLY (Since we aren't using npm) ---
-const FacebookIcon = () => (
-  <svg fill="currentColor" viewBox="0 0 320 512" height="1em" width="1em">
-    <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-  </svg>
-);
-
-const TwitterIcon = () => (
-  <svg fill="currentColor" viewBox="0 0 512 512" height="1em" width="1em">
-    <path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" />
-  </svg>
-);
-
-const InstagramIcon = () => (
-  <svg fill="currentColor" viewBox="0 0 448 512" height="1em" width="1em">
-    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
-  </svg>
-);
-
-// --- 3. HELPER COMPONENTS ---
-
-const PageContent = ({ currentPage, upcomingEvents }) => {
-  const commonContainerClasses = "max-w-5xl mx-auto px-8 py-16";
-  const commonCardClasses = "bg-white rounded-lg shadow-xl p-12";
-
-  if (currentPage === 'home') {
-    return (
-      <div>
-        <div className="relative bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white py-32">
-          <div className="absolute inset-0 opacity-30">
-            <svg className="w-full h-full" viewBox="0 0 1000 500" fill="white" stroke="white">
-              <circle cx="500" cy="250" r="80" fill="rgba(99,102,241,0.2)" /> 
-              <circle cx="500" cy="250" r="100" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.3" />
-            </svg>
-          </div>
-          <div className="relative max-w-7xl mx-auto px-8 text-center">
-            <h1 className="text-5xl md:text-6xl font-light mb-6 tracking-wide">
-              Discover the Future of Engineering and Technology
-            </h1>
-          </div>
-        </div>
-
-        <div className={commonContainerClasses}>
-          <div className={commonCardClasses}>
-            <h2 className="text-3xl font-light text-slate-800 mb-8">Who We Are</h2>
-            <div className="space-y-6 text-slate-700 leading-relaxed">
-              <p>The Undergraduate Quantum Association (UQA) is a student-run organization dedicated to fostering interest and knowledge in quantum technologies among undergraduate students at the University of Maryland.</p>
-              <p>Whether you're a physics major, computer science enthusiast, or simply curious about quantum mechanics, UQA provides a welcoming community to learn and collaborate.</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 mt-12">
-              <div>
-                <h3 className="text-xl font-light text-slate-800 mb-4">What We Do</h3>
-                <ul className="space-y-3 text-slate-700">
-                  <li><span className="text-indigo-600 font-bold mr-2">•</span> Weekly workshops</li>
-                  <li><span className="text-indigo-600 font-bold mr-2">•</span> Guest lectures</li>
-                  <li><span className="text-indigo-600 font-bold mr-2">•</span> Hackathons</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-xl font-light text-slate-800 mb-4">Get Involved</h3>
-                <ul className="space-y-3 text-slate-700">
-                  <li><span className="text-indigo-600 font-bold mr-2">•</span> Meetings every Wednesday @ 6PM</li>
-                  <li><span className="text-indigo-600 font-bold mr-2">•</span> Networking</li>
-                  <li><span className="text-indigo-600 font-bold mr-2">•</span> Access to resources</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (currentPage === 'about') {
-    return (
-      <div className={commonContainerClasses}>
-        <div className={commonCardClasses}>
-          <h2 className="text-4xl font-light text-slate-800 mb-8">About UMD UQA</h2>
-          <div className="space-y-8 text-slate-700 leading-relaxed">
-            <div>
-              <h3 className="text-2xl font-light text-slate-800 mb-4">Our Mission</h3>
-              <p>To make quantum technologies accessible and understandable to undergraduate students of all majors and backgrounds.</p>
-            </div>
-            <div>
-               <h3 className="text-2xl font-light text-slate-800 mb-4">Why Join?</h3>
-               <p>Learn, grow, network, and gain hands-on experience with real quantum hardware.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (currentPage === 'events') {
-    return (
-      <div className={commonContainerClasses}>
-        <div className={commonCardClasses}>
-          <h2 className="text-4xl font-light text-slate-800 mb-8">Upcoming Events</h2>
-          <div className="space-y-8">
-            {upcomingEvents.map((event, index) => (
-              <div key={index} className="border-l-4 border-indigo-600 pl-6 py-4">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-2xl font-light text-slate-800">{event.title}</h3>
-                  <span className="text-indigo-600 font-light whitespace-nowrap ml-4">{event.date}</span>
-                </div>
-                <div className="space-y-1 text-slate-700 mb-3">
-                  <p className="text-sm"><span className="font-medium">Time:</span> {event.time}</p>
-                  <p className="text-sm"><span className="font-medium">Location:</span> {event.location}</p>
-                </div>
-                <p className="text-slate-700">{event.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  if (currentPage === 'contact') {
-    return (
-      <div className={commonContainerClasses}>
-        <div className={commonCardClasses}>
-          <h2 className="text-4xl font-light text-slate-800 mb-8">Get In Touch</h2>
-          <div className="space-y-8 text-slate-700">
-             <p><span className="font-medium">Email:</span> umd.uqa@gmail.com</p>
-             <p><span className="font-medium">Location:</span> Physics Building</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return null;
-};
-
-// --- 4. MAIN COMPONENT ---
 
 function UMDUQAWebsite() {
   const [currentPage, setCurrentPage] = useState('home');
-
-  // CHANGE THIS TO YOUR IMAGE PATH
-  const UQALogo = "./UQA_white.jpg"; 
 
   const navigation = [
     { id: 'about', label: 'About' },
@@ -157,47 +15,68 @@ function UMDUQAWebsite() {
       time: '6:00 PM - 8:00 PM',
       location: 'Physics Building, Room 1410',
       description: 'Hands-on introduction to quantum algorithms using Qiskit'
+    },
+    {
+      title: 'Guest Lecture: Quantum Cryptography',
+      date: 'November 22, 2025',
+      time: '5:30 PM - 7:00 PM',
+      location: 'Edward St. John Learning & Teaching Center',
+      description: 'Dr. Sarah Chen from IBM Quantum discusses post-quantum cryptography'
+    },
+    {
+      title: 'Social Meetup & Study Session',
+      date: 'December 1, 2025',
+      time: '4:00 PM - 6:00 PM',
+      location: 'Stamp Student Union',
+      description: 'Casual gathering to discuss quantum topics and work on projects together'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col">
-      <nav className="bg-slate-800 border-b border-slate-700 shadow-md sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-8 py-4">
+    <div className="min-h-screen bg-slate-200">
+      {/* Navigation */}
+      <nav className="bg-slate-200 border-b border-slate-300">
+        <div className="max-w-7xl mx-auto px-8 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 cursor-pointer" onClick={() => setCurrentPage('home')}>
-              <img src={UQALogo} alt="UMD UQA Logo" className="h-16 w-auto" />
+            {/* Logo */}
+            <div className="flex items-center gap-4">
+              <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="35" stroke="#7c7fc4" strokeWidth="2" fill="none" />
+                <ellipse cx="50" cy="50" rx="45" ry="15" stroke="#7c7fc4" strokeWidth="2" fill="none" />
+                <ellipse cx="50" cy="50" rx="15" ry="45" stroke="#7c7fc4" strokeWidth="2" fill="none" />
+                <circle cx="50" cy="50" r="4" fill="#7c7fc4" />
+                <text x="50" y="55" textAnchor="middle" fill="#7c7fc4" fontSize="20" fontWeight="bold">UQA</text>
+              </svg>
               <div>
-                <div className="text-xl font-light text-white">Undergraduate</div>
-                <div className="text-xl font-medium text-white">Quantum</div>
-                <div className="text-xl font-light text-white">Association</div>
+                <div className="text-xl font-light text-slate-700">Undergraduate</div>
+                <div className="text-xl font-light text-slate-700">Quantum</div>
+                <div className="text-xl font-light text-slate-700">Association</div>
               </div>
             </div>
             
+            {/* Nav Links */}
             <div className="flex items-center gap-8">
               {navigation.map(item => (
-                <a
-                  href={`#${item.id}`} 
+                <button
                   key={item.id}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(item.id);
-                  }}
-                  className={`text-slate-300 hover:text-slate-50 transition-colors font-light ${currentPage === item.id ? 'text-indigo-400 font-medium' : ''}`}
+                  onClick={() => setCurrentPage(item.id)}
+                  className="text-slate-600 hover:text-indigo-400 transition-colors font-light"
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
               
-              <div className="flex items-center gap-4 ml-4 text-slate-300">
-                  <span className="hover:text-white cursor-pointer"><FacebookIcon /></span>
-                  <span className="hover:text-white cursor-pointer"><TwitterIcon /></span>
-                  <span className="hover:text-white cursor-pointer"><InstagramIcon /></span>
+              {/* Social Icons */}
+              <div className="flex items-center gap-4 ml-4">
+                <span className="text-slate-500 hover:text-indigo-400 transition-colors cursor-pointer">📘</span>
+                <span className="text-slate-500 hover:text-indigo-400 transition-colors cursor-pointer">🐦</span>
+                <span className="text-slate-500 hover:text-indigo-400 transition-colors cursor-pointer">📸</span>
               </div>
               
+              {/* Contact Button */}
               <button
                 onClick={() => setCurrentPage('contact')}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-full transition-colors font-medium shadow-md hover:shadow-lg"
+                className="bg-indigo-400 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-full transition-colors font-light"
               >
                 Contact UMD UQA
               </button>
@@ -206,14 +85,242 @@ function UMDUQAWebsite() {
         </div>
       </nav>
 
-      <main className="flex-grow">
-        <PageContent currentPage={currentPage} upcomingEvents={upcomingEvents} />
-      </main>
+      {/* Home/Hero Page */}
+      {currentPage === 'home' && (
+        <div>
+          {/* Hero Section with Background */}
+          <div className="relative bg-gradient-to-r from-teal-900 via-blue-900 to-indigo-900 text-white py-32">
+            <div className="absolute inset-0 opacity-30">
+              <svg className="w-full h-full" viewBox="0 0 1000 500">
+                {[...Array(100)].map((_, i) => (
+                  <line
+                    key={i}
+                    x1={Math.random() * 1000}
+                    y1={Math.random() * 500}
+                    x2={Math.random() * 1000}
+                    y2={Math.random() * 500}
+                    stroke="currentColor"
+                    strokeWidth="0.5"
+                    opacity={Math.random() * 0.3}
+                  />
+                ))}
+                <circle cx="500" cy="250" r="80" fill="rgba(99,102,241,0.2)" />
+                <circle cx="500" cy="250" r="100" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.3" />
+              </svg>
+            </div>
+            <div className="relative max-w-7xl mx-auto px-8 text-center">
+              <h1 className="text-5xl md:text-6xl font-light mb-6 tracking-wide">
+                Discover the Future of Engineering and Technology
+              </h1>
+            </div>
+          </div>
 
-      <footer className="bg-slate-100 border-t border-slate-300 mt-auto">
+          {/* Content Section */}
+          <div className="max-w-5xl mx-auto px-8 py-16">
+            <div className="bg-white rounded-lg shadow-sm p-12">
+              <h2 className="text-3xl font-light text-slate-800 mb-8">Who We Are</h2>
+              <div className="space-y-6 text-slate-600 leading-relaxed">
+                <p>
+                  The Undergraduate Quantum Association (UQA) is a student-run organization 
+                  dedicated to fostering interest and knowledge in quantum technologies among 
+                  undergraduate students at the University of Maryland.
+                </p>
+                <p>
+                  Whether you're a physics major, computer science enthusiast, mathematics student, 
+                  or simply curious about quantum mechanics, UQA provides a welcoming community 
+                  to learn, explore, and collaborate on quantum-related topics.
+                </p>
+                <p>
+                  Our mission is to make quantum computing accessible to all undergraduates through 
+                  hands-on learning experiences, research opportunities, and a supportive community 
+                  of quantum enthusiasts.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 mt-12">
+                <div>
+                  <h3 className="text-xl font-light text-slate-800 mb-4">What We Do</h3>
+                  <ul className="space-y-3 text-slate-600">
+                    <li>• Weekly workshops on quantum programming and algorithms</li>
+                    <li>• Guest lectures from quantum industry professionals</li>
+                    <li>• Collaborative projects and quantum hackathons</li>
+                    <li>• Social events and study groups</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-xl font-light text-slate-800 mb-4">Get Involved</h3>
+                  <ul className="space-y-3 text-slate-600">
+                    <li>• Join our weekly meetings every Wednesday at 6:00 PM</li>
+                    <li>• Connect with students from all backgrounds</li>
+                    <li>• Access quantum computing resources and tools</li>
+                    <li>• Network with researchers and industry professionals</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* About Page */}
+      {currentPage === 'about' && (
+        <div className="max-w-5xl mx-auto px-8 py-16">
+          <div className="bg-white rounded-lg shadow-sm p-12">
+            <h2 className="text-4xl font-light text-slate-800 mb-8">About UMD UQA</h2>
+            
+            <div className="space-y-8 text-slate-600 leading-relaxed">
+              <div>
+                <h3 className="text-2xl font-light text-slate-800 mb-4">Our Mission</h3>
+                <p>
+                  The Undergraduate Quantum Association is committed to making quantum technologies 
+                  accessible and understandable to undergraduate students of all majors and backgrounds. 
+                  We believe that quantum computing represents the future of technology, and our goal 
+                  is to prepare the next generation of quantum scientists and engineers.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-light text-slate-800 mb-4">Our Vision</h3>
+                <p>
+                  We envision a community where students can freely explore quantum concepts, collaborate 
+                  on cutting-edge projects, and build connections with peers who share their passion for 
+                  quantum science. Through education, hands-on experience, and networking, we aim to 
+                  empower students to become leaders in the quantum revolution.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-light text-slate-800 mb-4">Why Join UQA?</h3>
+                <div className="grid md:grid-cols-2 gap-6 mt-4">
+                  <div className="bg-slate-50 p-6 rounded-lg">
+                    <h4 className="font-medium text-slate-800 mb-2">Learn & Grow</h4>
+                    <p className="text-sm">
+                      Access workshops, tutorials, and resources to build your quantum computing skills 
+                      from beginner to advanced levels.
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 p-6 rounded-lg">
+                    <h4 className="font-medium text-slate-800 mb-2">Network</h4>
+                    <p className="text-sm">
+                      Connect with like-minded students, researchers, and industry professionals in 
+                      the quantum computing field.
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 p-6 rounded-lg">
+                    <h4 className="font-medium text-slate-800 mb-2">Hands-On Experience</h4>
+                    <p className="text-sm">
+                      Work on real quantum computing projects using platforms like IBM Qiskit and 
+                      participate in hackathons.
+                    </p>
+                  </div>
+                  <div className="bg-slate-50 p-6 rounded-lg">
+                    <h4 className="font-medium text-slate-800 mb-2">Community</h4>
+                    <p className="text-sm">
+                      Be part of a welcoming community that supports your academic and professional 
+                      growth in quantum technologies.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Events Page */}
+      {currentPage === 'events' && (
+        <div className="max-w-5xl mx-auto px-8 py-16">
+          <div className="bg-white rounded-lg shadow-sm p-12">
+            <h2 className="text-4xl font-light text-slate-800 mb-8">Upcoming Events</h2>
+            
+            <div className="space-y-8">
+              {upcomingEvents.map((event, index) => (
+                <div key={index} className="border-l-4 border-indigo-400 pl-6 py-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-2xl font-light text-slate-800">{event.title}</h3>
+                    <span className="text-indigo-400 font-light whitespace-nowrap ml-4">
+                      {event.date}
+                    </span>
+                  </div>
+                  <div className="space-y-1 text-slate-600 mb-3">
+                    <p className="text-sm">
+                      <span className="font-medium">Time:</span> {event.time}
+                    </p>
+                    <p className="text-sm">
+                      <span className="font-medium">Location:</span> {event.location}
+                    </p>
+                  </div>
+                  <p className="text-slate-600">{event.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 bg-indigo-50 rounded-lg p-8 text-center">
+              <h3 className="text-2xl font-light text-slate-800 mb-3">Stay Updated</h3>
+              <p className="text-slate-600">
+                Follow us on social media and join our mailing list to never miss an event!
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Page */}
+      {currentPage === 'contact' && (
+        <div className="max-w-5xl mx-auto px-8 py-16">
+          <div className="bg-white rounded-lg shadow-sm p-12">
+            <h2 className="text-4xl font-light text-slate-800 mb-8">Get In Touch</h2>
+            
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-2xl font-light text-slate-800 mb-4">Contact Information</h3>
+                <div className="space-y-3 text-slate-600">
+                  <p>
+                    <span className="font-medium">Email:</span> umd.uqa@gmail.com
+                  </p>
+                  <p>
+                    <span className="font-medium">Location:</span> University of Maryland, College Park
+                  </p>
+                  <p>
+                    <span className="font-medium">Department:</span> Physics Building
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-slate-200 pt-8">
+                <h3 className="text-2xl font-light text-slate-800 mb-4">Join Our Community</h3>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  Interested in joining UQA? We welcome students from all backgrounds and experience levels. 
+                  Send us an email to learn more about membership, upcoming events, and how to get involved!
+                </p>
+                <div className="bg-slate-50 rounded-lg p-6">
+                  <h4 className="text-xl font-light text-slate-800 mb-3">Meeting Times</h4>
+                  <p className="text-slate-600">
+                    General meetings are held every other Wednesday at 6:00 PM in the Physics Building. 
+                    Check our events page for specific dates and locations.
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-slate-200 pt-8">
+                <h3 className="text-2xl font-light text-slate-800 mb-4">Collaboration Opportunities</h3>
+                <p className="text-slate-600 leading-relaxed">
+                  Are you a researcher, company, or organization interested in collaborating with UQA? 
+                  We're always open to partnerships, sponsorships, and speaking opportunities. 
+                  Reach out to discuss how we can work together to advance quantum education!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
+      <footer className="bg-slate-100 border-t border-slate-300 mt-16">
         <div className="max-w-7xl mx-auto px-8 py-8">
           <div className="text-center text-slate-500 text-sm">
             <p className="mb-1">© 2025 UMD Undergraduate Quantum Association</p>
+            <p>Empowering the next generation of quantum scientists</p>
           </div>
         </div>
       </footer>
@@ -221,6 +328,5 @@ function UMDUQAWebsite() {
   );
 }
 
-// --- 5. RENDER THE APP ---
-const root = createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<UMDUQAWebsite />);
